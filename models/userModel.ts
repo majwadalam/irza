@@ -47,6 +47,4 @@ if (mongoose.models.users) {
   mongoose.deleteModel(userModel.modelName);
 }
 // create new model
-const User = mongoose.model("users", userSchema);
-
-export default User;
+export default mongoose.models.users || mongoose.model("users", userSchema);

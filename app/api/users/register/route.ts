@@ -1,7 +1,7 @@
 import { connectDB } from "@/config/dbConfig";
 import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/userModel";
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 connectDB();
 
 // export async function GET(request: NextRequest) {
@@ -21,22 +21,22 @@ export async function POST(request: NextRequest) {
     }
 
     // hash password
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(reqBody.password, salt)
-    reqBody.password = hashedPassword
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(reqBody.password, salt);
+    reqBody.password = hashedPassword;
 
     // create user
     const newUser = new User({
       name: reqBody.name,
       password: reqBody.password,
-      newProduct: reqBody.userAuthority.includes('newProduct'),
-      sold: reqBody.userAuthority.includes('sold'),
-      returning: reqBody.userAuthority.includes('returning'),
-      query: reqBody.userAuthority.includes('query'),
-      addUser: reqBody.userAuthority.includes('addUser')
-    })
+      newProduct: reqBody.userAuthority.includes("newProduct") || true,
+      sold: reqBody.userAuthority.includes("sold") || true,
+      returning: reqBody.userAuthority.includes("returning") || true,
+      query: reqBody.userAuthority.includes("query") || true,
+      addUser: reqBody.userAuthority.includes("addUser") || true,
+    });
 
-    await newUser.save()
+    await newUser.save();
 
     // await User.create(reqBody)
     return NextResponse.json(

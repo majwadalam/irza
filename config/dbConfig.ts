@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 export function connectDB() {
   try {
+    console.log(process.env.DB_URI);
     mongoose.connect(process.env.DB_URI!);
 
     const connection = mongoose.connection;
